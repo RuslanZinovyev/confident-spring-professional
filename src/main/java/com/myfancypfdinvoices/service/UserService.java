@@ -1,6 +1,6 @@
-package com.myproject.service;
+package com.myfancypfdinvoices.service;
 
-import com.myproject.model.User;
+import com.myfancypfdinvoices.model.User;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;

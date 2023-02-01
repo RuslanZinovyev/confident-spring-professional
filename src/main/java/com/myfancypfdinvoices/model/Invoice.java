@@ -1,4 +1,4 @@
-package com.myproject.model;
+package com.myfancypfdinvoices.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

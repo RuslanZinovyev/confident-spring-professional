@@ -1,4 +1,4 @@
-package com.myproject.model;
+package com.myfancypfdinvoices.model;
 
 public class User {
     private String id;

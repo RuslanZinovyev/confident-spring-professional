@@ -1,7 +1,7 @@
-package com.myproject.service;
+package com.myfancypfdinvoices.service;
 
-import com.myproject.model.Invoice;
-import com.myproject.model.User;
+import com.myfancypfdinvoices.model.Invoice;
+import com.myfancypfdinvoices.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;

@@ -1,4 +1,4 @@
-package com.myproject.service;
+package com.myfancypfdinvoices.service;
 
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
