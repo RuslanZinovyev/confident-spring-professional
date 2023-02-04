@@ -5,14 +5,14 @@ import com.myfancypfdinvoices.model.Invoice;
 import com.myfancypfdinvoices.service.InvoiceService;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-public class MyFancyPdfInvoicesController {
-
+public class InvoicesController {
     private final InvoiceService invoiceService;
 
-    public MyFancyPdfInvoicesController(InvoiceService invoiceService) {
+    public InvoicesController(InvoiceService invoiceService) {
         this.invoiceService = invoiceService;
     }
 
@@ -22,7 +22,7 @@ public class MyFancyPdfInvoicesController {
     }
 
     @PostMapping("/invoices")
-    public Invoice createInvoice(@RequestBody InvoiceDto invoiceDto) {
+    public Invoice createInvoice(@RequestBody @Valid InvoiceDto invoiceDto) {
         return invoiceService.create(invoiceDto.getUserId(), invoiceDto.getAmount());
     }
 }

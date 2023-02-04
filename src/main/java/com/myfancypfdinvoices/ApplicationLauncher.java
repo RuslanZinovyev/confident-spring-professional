@@ -1,6 +1,6 @@
 package com.myfancypfdinvoices;
 
-import com.myfancypfdinvoices.context.MyFancyPdfInvoicesApplicationConfiguration;
+import com.myfancypfdinvoices.context.ApplicationConfiguration;
 import org.apache.catalina.Context;
 import org.apache.catalina.LifecycleException;
 import org.apache.catalina.Wrapper;
@@ -31,7 +31,7 @@ public class ApplicationLauncher {
 
     public static WebApplicationContext createApplicationContext(ServletContext servletContext) {
         AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
-        context.register(MyFancyPdfInvoicesApplicationConfiguration.class);
+        context.register(ApplicationConfiguration.class);
         context.setServletContext(servletContext);
         context.refresh();
         context.registerShutdownHook();

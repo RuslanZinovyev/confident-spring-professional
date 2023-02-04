@@ -12,7 +12,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @Configuration
 @ComponentScan(basePackageClasses = ApplicationLauncher.class)
 @PropertySource("classpath:/application.properties")
-public class MyFancyPdfInvoicesApplicationConfiguration {
+public class ApplicationConfiguration {
 
     @Bean
     public ObjectMapper objectMapper() {
