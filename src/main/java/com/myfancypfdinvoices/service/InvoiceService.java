@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -37,6 +38,7 @@ public class InvoiceService {
         System.out.println("Fetching PDF Template from S3...");
     }
 
+    @Transactional
     public List<Invoice> findAll() {
         return jdbcTemplate.query("SELECT id, user_id, pdf_url, amount FROM invoices", (resultSet, rowNum) -> {
             Invoice invoice = new Invoice();
@@ -48,6 +50,7 @@ public class InvoiceService {
         });
     }
 
+    @Transactional
     public Invoice create(String userId, Integer amount) {
         String generatedPfgUrl = cdnUrl + "/images/default/sample.pdf";
 
