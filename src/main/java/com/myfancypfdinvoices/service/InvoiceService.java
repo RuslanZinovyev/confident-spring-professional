@@ -4,6 +4,7 @@ import com.myfancypfdinvoices.model.Invoice;
 import com.myfancypfdinvoices.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -15,14 +16,19 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class InvoiceService {
 
     private final UserService userService;
+    @Value("${cdn.url}")
     private final String cdnUrl;
+    private final JdbcTemplate jdbcTemplate;
 
     private final List<Invoice> invoices = new CopyOnWriteArrayList<>();
 
     @Autowired
-    public InvoiceService(UserService userService, @Value("${cdn.url}") String cdnUrl) {
+    public InvoiceService(UserService userService,
+                          String cdnUrl,
+                          JdbcTemplate jdbcTemplate) {
         this.userService = userService;
         this.cdnUrl = cdnUrl;
+        this.jdbcTemplate = jdbcTemplate;
     }
 
     @PostConstruct
@@ -31,7 +37,14 @@ public class InvoiceService {
     }
 
     public List<Invoice> findAll() {
-        return invoices;
+        return jdbcTemplate.query("SELECT id, user_id, pdf_url, amount FROM invoices", (resultSet, rowNum) -> {
+            Invoice invoice = new Invoice();
+            invoice.setId(resultSet.getObject("id").toString());
+            invoice.setPdfUrl(resultSet.getString("pdf_url"));
+            invoice.setUserId(resultSet.getString("user_id"));
+            invoice.setAmount(resultSet.getInt("amount"));
+            return invoice;
+        });
     }
 
     public Invoice create(String userId, Integer amount) {

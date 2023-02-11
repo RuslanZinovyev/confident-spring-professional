@@ -2,14 +2,18 @@ package com.myfancypfdinvoices.context;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.myfancypfdinvoices.ApplicationLauncher;
+import org.postgresql.ds.PGSimpleDataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
+
+import javax.sql.DataSource;
 
 @EnableWebMvc
 @Configuration
@@ -46,5 +50,22 @@ public class ApplicationConfiguration {
         templateResolver.setPrefix("classpath:/templates/");
         templateResolver.setCacheable(false);
         return templateResolver;
+    }
+
+    @Bean
+    public DataSource dataSource() {
+        PGSimpleDataSource dataSource = new PGSimpleDataSource();
+        dataSource.setServerName("localhost");
+        dataSource.setPortNumber(5432);
+        dataSource.setUser("ruslanzinovyev");
+        dataSource.setPassword("Best4Life");
+        dataSource.setDatabaseName("invoice");
+
+        return dataSource;
+    }
+
+    @Bean
+    public JdbcTemplate jdbcTemplate() {
+        return new JdbcTemplate(dataSource());
     }
 }
