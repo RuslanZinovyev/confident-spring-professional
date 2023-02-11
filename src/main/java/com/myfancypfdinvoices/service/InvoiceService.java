@@ -5,25 +5,25 @@ import com.myfancypfdinvoices.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-@Component
+@Service
 public class InvoiceService {
 
     private final UserService userService;
-    @Value("${cdn.url}")
+
     private final String cdnUrl;
     private final JdbcTemplate jdbcTemplate;
-
     private final List<Invoice> invoices = new CopyOnWriteArrayList<>();
 
     @Autowired
     public InvoiceService(UserService userService,
+                          @Value("${cdn.url}")
                           String cdnUrl,
                           JdbcTemplate jdbcTemplate) {
         this.userService = userService;
