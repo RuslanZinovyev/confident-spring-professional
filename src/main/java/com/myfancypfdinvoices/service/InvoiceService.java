@@ -1,7 +1,8 @@
 package com.myfancypfdinvoices.service;
 
 import com.myfancypfdinvoices.model.Invoice;
-import com.myfancypfdinvoices.model.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -16,13 +17,14 @@ import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.List;
 import java.util.UUID;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 @Service
 public class InvoiceService {
+
+    private static final Logger logger = LoggerFactory.getLogger(InvoiceService.class);
+
     private final String cdnUrl;
     private final JdbcTemplate jdbcTemplate;
-    private final List<Invoice> invoices = new CopyOnWriteArrayList<>();
 
     @Autowired
     public InvoiceService(UserService userService,
@@ -40,6 +42,7 @@ public class InvoiceService {
 
     @Transactional
     public List<Invoice> findAll() {
+        logger.info("findAll method has been invoked");
         return jdbcTemplate.query("SELECT id, user_id, pdf_url, amount FROM invoices", (resultSet, rowNum) -> {
             Invoice invoice = new Invoice();
             invoice.setId(resultSet.getObject("id").toString());
@@ -52,6 +55,7 @@ public class InvoiceService {
 
     @Transactional
     public Invoice create(String userId, Integer amount) {
+        logger.info("create method has been invoked");
         String generatedPfgUrl = cdnUrl + "/images/default/sample.pdf";
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
