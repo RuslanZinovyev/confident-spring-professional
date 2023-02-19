@@ -49,13 +49,14 @@ public class InvoiceService {
             invoice.setPdfUrl(resultSet.getString("pdf_url"));
             invoice.setUserId(resultSet.getString("user_id"));
             invoice.setAmount(resultSet.getInt("amount"));
+            logger.info("Invoice body is {}", invoice);
             return invoice;
         });
     }
 
     @Transactional
     public Invoice create(String userId, Integer amount) {
-        logger.info("create method has been invoked");
+        logger.info("create method has been invoked with following data: userId:{} and amount:{}", userId, amount);
         String generatedPfgUrl = cdnUrl + "/images/default/sample.pdf";
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
